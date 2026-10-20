@@ -7,14 +7,14 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 const MODEL_URL = "/assets/models/kamran.glb";
 
 export default function ScrollScene() {
-  const mountRef = useRef<HTMLDivElement>(null);
+  const mountRef = useRef(null);
 
   useEffect(() => {
     const mount = mountRef.current;
     const section = document.getElementById("immersive-scene");
     if (!mount || !section) return;
 
-    let renderer: THREE.WebGLRenderer;
+    let renderer;
     try {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -65,7 +65,7 @@ export default function ScrollScene() {
     root.add(modelPivot);
 
     let disposed = false;
-    const disposeObject = (object: THREE.Object3D) => {
+    const disposeObject = (object) => {
       object.traverse((child) => {
         if (child instanceof THREE.Mesh || child instanceof THREE.Points) {
           child.geometry.dispose();
@@ -183,12 +183,12 @@ export default function ScrollScene() {
       section.style.setProperty("--scene-progress-pct", `${(targetProgress * 100).toFixed(2)}%`);
     };
 
-    const updatePointer = (clientX: number, clientY: number) => {
+    const updatePointer = (clientX, clientY) => {
       pointerTarget.x = (clientX / window.innerWidth) * 2 - 1;
       pointerTarget.y = -((clientY / window.innerHeight) * 2 - 1);
     };
-    const onPointerMove = (event: PointerEvent) => updatePointer(event.clientX, event.clientY);
-    const onTouchMove = (event: TouchEvent) => {
+    const onPointerMove = (event) => updatePointer(event.clientX, event.clientY);
+    const onTouchMove = (event) => {
       const touch = event.touches[0];
       if (touch) updatePointer(touch.clientX, touch.clientY);
     };
@@ -255,7 +255,7 @@ export default function ScrollScene() {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [mountRef]);
 
   return <div className="scene-canvas-wrap" ref={mountRef} />;
 }

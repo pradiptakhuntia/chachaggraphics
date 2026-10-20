@@ -1,11 +1,3 @@
-export type Review = {
-  name: string;
-  meta: string;
-  text: string;
-};
-
-export type Client = [name: string, logo: string];
-
 export const whatsappUrl =
   "https://wa.me/919861095786?text=Hello%20Chacha%20G%20Graphics%2C%20I%20would%20like%20a%20quote.";
 
@@ -105,7 +97,7 @@ export const quotationDetails = [
   ["04", "Delivery and installation", "Delivery address, installation scope and required completion date."],
 ];
 
-export const clients: Client[] = [
+export const clients = [
   ["NHM Odisha", "/assets/client-logos/NHM logo.webp"],
   ["IMFA", "/assets/client-logos/Imfa logo.webp"],
   ["BIPF", "/assets/client-logos/BIPF Logo.webp"],
@@ -121,7 +113,7 @@ export const clients: Client[] = [
   ["Rollick Ice Cream", "/assets/client-logos/Rollick Logo.webp"],
 ];
 
-export const reviews: Review[] = [
+export const reviews = [
   {
     name: "Saloni Sahoo",
     meta: "Google review",

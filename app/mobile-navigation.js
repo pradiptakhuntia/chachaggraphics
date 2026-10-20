@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 
-export default function MobileNavigation({ quotationUrl }: { quotationUrl: string }) {
-  const menuRef = useRef<HTMLDetailsElement>(null);
+export default function MobileNavigation({ quotationUrl }) {
+  const menuRef = useRef(null);
 
   const closeMenu = () => {
     if (menuRef.current) menuRef.current.open = false;

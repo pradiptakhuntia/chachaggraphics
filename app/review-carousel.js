@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Review } from "./homepage-content";
 
-export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
-  const trackRef = useRef<HTMLDivElement>(null);
+export default function ReviewCarousel({ reviews }) {
+  const trackRef = useRef(null);
   const manualPausedRef = useRef(false);
   const userPausedRef = useRef(false);
-  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resumeTimerRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
 
   const pauseTemporarily = () => {
@@ -19,13 +18,13 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
     }, 8000);
   };
 
-  const move = (direction: -1 | 1) => {
+  const move = (direction) => {
     const track = trackRef.current;
     if (!track) return;
-    const card = track.querySelector<HTMLElement>(".review-card");
+    const card = track.querySelector(".review-card");
     const gap = 20;
     const distance = (card?.offsetWidth ?? 320) + gap;
-    const cloneStart = track.querySelector<HTMLElement>("[data-carousel-clone='true']")?.offsetLeft;
+    const cloneStart = track.querySelector("[data-carousel-clone='true']")?.offsetLeft;
     if (direction === -1 && track.scrollLeft < distance && cloneStart) track.scrollLeft = cloneStart;
     track.scrollBy({ left: direction * distance, behavior: "smooth" });
   };
@@ -35,13 +34,13 @@ export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
 
     let frame = 0;
     let previousTime = window.performance.now();
-    const animate = (time: number) => {
+    const animate = (time) => {
       const track = trackRef.current;
       const elapsed = Math.min(time - previousTime, 64);
       previousTime = time;
 
       if (track && !userPausedRef.current && !manualPausedRef.current && !document.hidden) {
-        const cloneStart = track.querySelector<HTMLElement>("[data-carousel-clone='true']")?.offsetLeft;
+        const cloneStart = track.querySelector("[data-carousel-clone='true']")?.offsetLeft;
         if (cloneStart && track.scrollWidth > track.clientWidth) {
           track.scrollLeft += elapsed * 0.035;
           if (track.scrollLeft >= cloneStart) track.scrollLeft -= cloneStart;

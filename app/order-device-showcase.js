@@ -2,14 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-type DeviceShowcaseProps = {
-  device: "laptop" | "phone";
-  image: string;
-  alt: string;
-};
-
-export default function OrderDeviceShowcase({ device, image, alt }: DeviceShowcaseProps) {
-  const stageRef = useRef<HTMLDivElement>(null);
+export default function OrderDeviceShowcase({ device, image, alt }) {
+  const stageRef = useRef(null);
 
   useEffect(() => {
     const stage = stageRef.current;

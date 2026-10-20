@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Client } from "./homepage-content";
 
-export default function ClientGallery({ clients }: { clients: Client[] }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const wallRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLElement>(null);
+export default function ClientGallery({ clients }) {
+  const sectionRef = useRef(null);
+  const wallRef = useRef(null);
+  const trackRef = useRef(null);
+  const progressRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -35,7 +34,7 @@ export default function ClientGallery({ clients }: { clients: Client[] }) {
       progressBar.style.transform = `scaleX(${progress})`;
 
       const wallCenter = wallWidth / 2;
-      track.querySelectorAll<HTMLElement>(".client-frame").forEach((frame, index) => {
+      track.querySelectorAll(".client-frame").forEach((frame, index) => {
         const center = x + frame.offsetLeft + frame.offsetWidth / 2;
         const delta = center - wallCenter;
         const distance = Math.min(1, Math.abs(delta) / Math.max(1, wallWidth * 0.58));

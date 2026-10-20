@@ -1,4 +1,4 @@
-# Chacha G Graphics Option 5 — Server Deployment
+# Chacha G Graphics — Node.js Server Deployment
 
 This package contains the complete editable source code and all website assets.
 
@@ -45,21 +45,23 @@ Replace `example.com` with your domain, then add HTTPS using your hosting panel 
 ## Common commands
 
 ```bash
-npm run dev      # development server
-npm run build    # production build
-npm run start    # production server
-npm test         # build and run the included test
+npm run dev      # local Node.js server at http://localhost:3000
+npm run build    # compile the JSX server and browser bundles
+npm run start    # Node.js server (builds bundles on startup)
+npm test         # build and check rendered HTML and static resources
 ```
 
 ## Main project locations
 
 - `app/` — pages, components, and styling
 - `public/` — images, logos, favicons, 3D model, and other static assets
-- `worker/` — current Vinext/Cloudflare worker entry point
+- `server.js` — native Node.js HTTP server
+- `build.js` — esbuild-based JSX compilation
 - `package.json` — dependencies and scripts
 
 ## Notes
 
 - Do not upload `node_modules`; install dependencies on the target server with `npm ci`.
-- The app uses Vinext and is already configured for production builds.
+- The server renders the homepage with React and serves the original files in `public/`.
+- esbuild compiles JSX and bundles the browser-side React interactions; Vite and TypeScript are not used.
 - If your host only supports static HTML and cannot run Node.js, use a Node-capable VPS/container or adapt the project to a static export first.
