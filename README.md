@@ -19,6 +19,8 @@ npm run dev
 
 Open `http://localhost:8000`. The development server rebuilds the browser bundle
 when it starts; restart it after editing the React components.
+The app starts at the top of the homepage on each load or refresh, even if the
+previous URL included an in-page section link.
 
 ## Checks
 
