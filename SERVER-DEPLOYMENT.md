@@ -17,10 +17,10 @@ From the project directory:
 ```bash
 npm ci
 npm run build
-HOST=0.0.0.0 PORT=3000 npm run start
+HOST=0.0.0.0 PORT=8000 npm run start
 ```
 
-Open `http://SERVER_IP:3000` to verify the site. Keep the process running with your preferred service manager (for example, systemd, PM2, Docker, or your hosting control panel), then point your domain's reverse proxy to port 3000.
+Open `http://SERVER_IP:8000` to verify the site. Keep the process running with your preferred service manager (for example, systemd, PM2, Docker, or your hosting control panel), then point your domain's reverse proxy to port 8000.
 
 ## Nginx reverse-proxy example
 
@@ -30,7 +30,7 @@ server {
     server_name example.com www.example.com;
 
     location / {
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://127.0.0.1:8000;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -45,7 +45,7 @@ Replace `example.com` with your domain, then add HTTPS using your hosting panel 
 ## Common commands
 
 ```bash
-npm run dev      # local Node.js server at http://localhost:3000
+npm run dev      # local Node.js server at http://localhost:8000
 npm run build    # compile the JSX server and browser bundles
 npm run start    # Node.js server (builds bundles on startup)
 npm test         # build and check rendered HTML and static resources

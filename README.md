@@ -17,7 +17,7 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`. The development server rebuilds the browser bundle
+Open `http://localhost:8000`. The development server rebuilds the browser bundle
 when it starts; restart it after editing the React components.
 
 ## Checks
