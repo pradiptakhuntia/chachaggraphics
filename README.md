@@ -1,38 +1,40 @@
 # Chacha G Graphics
 
-The Chacha G Graphics portfolio and service website, built with React and
-JavaScript. A small Node.js server renders the homepage and serves the site's
-assets. esbuild compiles the JSX and browser code; the project does not use
-TypeScript, Vite, or a framework runtime.
+The Chacha G Graphics portfolio and service website. The server is a Python
+Flask application; the browser UI uses plain HTML, CSS, and JavaScript. No Node
+runtime, React, or frontend build step is needed to run the site.
 
 ## Requirements
 
-- Node.js `>=22.13.0`
-- npm
+- Python 3.11 or newer
+- pip
 
-## Development
+## Run locally
 
-```bash
-npm ci
-npm run dev
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python app.py
 ```
 
-Open `http://localhost:8000`. The development server rebuilds the browser bundle
-when it starts; restart it after editing the React components.
-The app starts at the top of the homepage on each load or refresh, even if the
-previous URL included an in-page section link.
+Open `http://localhost:8000`. Set `HOST` or `PORT` environment variables to
+override the local server address. Each page load or refresh starts at the top
+of the homepage, even if the previous URL contained a section fragment.
 
-## Checks
+## Tests
 
-- `npm run build` compiles the server-rendering and browser bundles.
-- `npm test` builds the site and checks rendered homepage content and resources.
-- `npm run lint` runs ESLint.
+```powershell
+python -m unittest discover -s tests -p "test_*.py"
+```
 
-## Project Structure
+## Project structure
 
-- `app/page.js` contains the homepage layout and section markup.
-- `app/homepage-content.js` contains editable homepage content.
-- `app/` also contains the interactive React components and global styles.
-- `public/assets/` contains the site's images, models, videos, and brand assets.
-- `server.js` serves the server-rendered page and static resources.
-- `build.js` creates the JSX server-rendering and browser bundles with esbuild.
+- `app.py` — Flask application and static resource routes.
+- `templates/index.html` — the website's server-served HTML.
+- `static/site.css` — website styles.
+- `static/site.js` and `static/scroll-scene.js` — browser interactions.
+- `static/vendor/three/` — local Three.js modules and their MIT license.
+- `public/` — original website resources, including images, icons, videos, and
+  the 3D model.
+- `requirements.txt` — Python runtime dependencies.

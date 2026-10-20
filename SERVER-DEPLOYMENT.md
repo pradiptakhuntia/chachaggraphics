@@ -1,26 +1,28 @@
-# Chacha G Graphics — Node.js Server Deployment
-
-This package contains the complete editable source code and all website assets.
+# Chacha G Graphics — Flask Deployment
 
 ## Requirements
 
-- Node.js 22.13 or newer
-- npm
+- Python 3.11 or newer
+- pip
 - A reverse proxy such as Nginx or Caddy for HTTPS in production
 
-The current website does not require a database, object storage, API keys, or secret environment variables.
+The application does not require a database, API keys, or secret environment
+variables.
 
-## Run locally or on a VPS
+## Run locally or on a server
 
-From the project directory:
-
-```bash
-npm ci
-npm run build
-HOST=0.0.0.0 PORT=8000 npm run start
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+$env:HOST = "0.0.0.0"
+$env:PORT = "8000"
+python app.py
 ```
 
-Open `http://SERVER_IP:8000` to verify the site. Keep the process running with your preferred service manager (for example, systemd, PM2, Docker, or your hosting control panel), then point your domain's reverse proxy to port 8000.
+Open `http://SERVER_IP:8000` to verify the site. For production, run Flask
+behind a production WSGI server and reverse proxy; Flask's built-in server is
+intended for local development.
 
 ## Nginx reverse-proxy example
 
@@ -31,7 +33,6 @@ server {
 
     location / {
         proxy_pass http://127.0.0.1:8000;
-        proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -40,28 +41,19 @@ server {
 }
 ```
 
-Replace `example.com` with your domain, then add HTTPS using your hosting panel or Certbot.
+Replace `example.com` with your domain, then configure HTTPS using your hosting
+provider or Certbot.
 
-## Common commands
+## Tests
 
-```bash
-npm run dev      # local Node.js server at http://localhost:8000
-npm run build    # compile the JSX server and browser bundles
-npm run start    # Node.js server (builds bundles on startup)
-npm test         # build and check rendered HTML and static resources
+```powershell
+python -m unittest discover -s tests -p "test_*.py"
 ```
 
-## Main project locations
+## Main locations
 
-- `app/` — pages, components, and styling
-- `public/` — images, logos, favicons, 3D model, and other static assets
-- `server.js` — native Node.js HTTP server
-- `build.js` — esbuild-based JSX compilation
-- `package.json` — dependencies and scripts
-
-## Notes
-
-- Do not upload `node_modules`; install dependencies on the target server with `npm ci`.
-- The server renders the homepage with React and serves the original files in `public/`.
-- esbuild compiles JSX and bundles the browser-side React interactions; Vite and TypeScript are not used.
-- If your host only supports static HTML and cannot run Node.js, use a Node-capable VPS/container or adapt the project to a static export first.
+- `app.py` — Flask application.
+- `templates/` — homepage HTML.
+- `static/` — CSS, JavaScript, and locally served Three.js modules.
+- `public/` — original images, logos, favicons, 3D model, and other resources.
+- `requirements.txt` — Python dependencies.
